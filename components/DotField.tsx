@@ -25,6 +25,7 @@ export default function DotField() {
     const ctx = canvas.getContext("2d")!;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const ROW = 52, LANE = 30, SPEED = 0.2; // rows per second
+    const SCALE = 0.8; // overall size of the graph
     let w = 0, h = 0, raf = 0, visible = true;
 
     // ---- graph generation ----
@@ -65,11 +66,12 @@ export default function DotField() {
 
     function resize() {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      w = canvas.clientWidth;
-      h = canvas.clientHeight;
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      canvas.width = canvas.clientWidth * dpr;
+      canvas.height = canvas.clientHeight * dpr;
+      // draw in scaled units so everything shrinks uniformly
+      w = canvas.clientWidth / SCALE;
+      h = canvas.clientHeight / SCALE;
+      ctx.setTransform(dpr * SCALE, 0, 0, dpr * SCALE, 0, 0);
     }
 
     function draw(time: number) {
