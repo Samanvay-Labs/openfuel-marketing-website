@@ -1,8 +1,9 @@
-// All site copy lives here. Values marked TODO / placeholder are not final.
+// All site copy lives here.
 
 export const site = {
   name: "OpenFuel",
-  url: "https://openfuel.dev", // TODO: confirm production domain
+  url: "https://openfuel.dev",
+  email: "hello@samanvaylabs.com",
   title: "OpenFuel: Your merged PRs fuel your AI",
   description:
     "OpenFuel turns every merged open-source contribution into AI credits. Ship upstream, earn credits, build faster. A Samanvay Labs project.",
@@ -75,7 +76,7 @@ export const verification = {
       id: "R2",
       name: "Minimum contribution size",
       text: "Whitespace, lockfile and generated-file changes are not counted. The rest of the diff has to be large enough to matter.",
-      check: "meaningful_lines >= MIN_LINES  // threshold TBD",
+      check: "meaningful_lines >= 10",
     },
     {
       id: "R3",
@@ -175,14 +176,14 @@ export const faq = {
   label: "FAQ",
   title: "Questions.",
   items: [
-    { q: "Who can apply?", a: "Any developer with a GitHub account and a history of open-source contributions. TODO: final criteria." },
-    { q: "How long does approval take?", a: "TODO: expected review time." },
-    { q: "What counts as a contribution?", a: "A pull request merged into an eligible open-source project that passes verification. TODO: details." },
-    { q: "Which projects are eligible?", a: "TODO: eligibility criteria and list." },
-    { q: "How fast are credits issued?", a: "TODO: time between merge verification and credit issuance." },
-    { q: "Do credits expire?", a: "TODO: expiry policy." },
+    { q: "Who can apply?", a: "Any developer with a GitHub account and a history of open-source contributions. We look for at least a few merged pull requests in public repositories that are not your own, on an account in good standing." },
+    { q: "How long does approval take?", a: "Most applications are reviewed within 3 to 5 business days. You will get an email as soon as a decision is made." },
+    { q: "What counts as a contribution?", a: "A pull request merged into an eligible open-source project that passes verification: merged by someone else, at least 10 meaningful changed lines, and not flagged as spam. Code, tests and substantial documentation all count." },
+    { q: "Which projects are eligible?", a: "Any public repository with an OSI-approved license and recent activity, unless its maintainers have opted out. Maintainers can also join explicitly with a .openfuel.yml file to set their own rules." },
+    { q: "How fast are credits issued?", a: "Usually within minutes of the merge. PRs flagged for manual review can take up to 48 hours." },
+    { q: "Do credits expire?", a: "Credits stay valid for 12 months from the date they are issued, as long as your account remains active." },
     { q: "Can I cash out credits?", a: "No. Credits are for AI usage inside OpenFuel only and have no cash value." },
-    { q: "Is OpenFuel free?", a: "OpenFuel is open source. AI usage is paid for with credits you earn by contributing. TODO: confirm pricing details." },
+    { q: "Is OpenFuel free?", a: "OpenFuel is open source. AI usage is paid for with credits you earn by contributing, so there is no subscription and no card required." },
   ],
 };
 
@@ -195,8 +196,8 @@ export const footer = {
   wordmark: "openfuel",
   tagline: "OpenFuel is a Samanvay Labs project.",
   links: [
-    { label: "Privacy", href: "/privacy" }, // TODO: create page
-    { label: "Terms", href: "/terms" }, // TODO: create page
+    { label: "Privacy", href: "/privacy" },
+    { label: "Terms", href: "/terms" },
   ],
   copyright: "© 2026 Samanvay Labs",
 };
