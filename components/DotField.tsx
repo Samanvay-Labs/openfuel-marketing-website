@@ -24,7 +24,7 @@ export default function DotField() {
     const canvas = ref.current!;
     const ctx = canvas.getContext("2d")!;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const ROW = 52, LANE = 30, SPEED = 0.9; // rows per second
+    const ROW = 52, LANE = 30, SPEED = 0.2; // rows per second
     let w = 0, h = 0, raf = 0, visible = true;
 
     // ---- graph generation ----
