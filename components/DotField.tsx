@@ -25,7 +25,7 @@ export default function DotField() {
     const ctx = canvas.getContext("2d")!;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const ROW = 52, LANE = 30, SPEED = 0.2; // rows per second
-    const SCALE = 0.8; // overall size of the graph
+    const SCALE = 0.9; // overall size of the graph
     let w = 0, h = 0, raf = 0, visible = true;
 
     // ---- graph generation ----
@@ -87,7 +87,15 @@ export default function DotField() {
       const head = Math.floor(now);
       const top = 70;
       const y = (r: number) => top + (now - r) * ROW;   // newest at top, history scrolls down
-      const x = (l: number) => 24 + l * LANE;
+      // measure widest row so the whole graph can be centered horizontally
+      ctx.font = `14px ${font}`;
+      let textW = Math.max(...MSGS.map((m) => ctx.measureText(m).width));
+      const mergeW = ctx.measureText("Merge PR #000").width + 14;
+      ctx.font = `600 13px ${font}`;
+      textW = Math.max(textW, mergeW + ctx.measureText("+000 credits").width + 18);
+      const contentW = 3 * LANE + 8 + textW;
+      const ox = Math.max(24, (w - contentW) / 2);
+      const x = (l: number) => ox + l * LANE;
       const fade = (yy: number) => Math.max(0, Math.min(1, (yy - top + ROW) / ROW, (h - yy) / 90));
 
       // credit any merge that has appeared
@@ -158,11 +166,11 @@ export default function DotField() {
       ctx.font = `13px ${font}`;
       ctx.fillStyle = muted;
       ctx.textBaseline = "alphabetic";
-      ctx.fillText("$ git log --graph", 24, 26);
+      ctx.fillText("$ git log --graph", ox, 26);
       ctx.font = `600 20px ${font}`;
       ctx.fillStyle = fg;
       const bal = `${balance.toLocaleString("en-US")} credits`;
-      ctx.fillText(bal, Math.max(24, w - ctx.measureText(bal).width - 8), 28);
+      ctx.fillText(bal, Math.max(ox, Math.min(w - 8, ox + contentW) - ctx.measureText(bal).width), 28);
 
       cancelAnimationFrame(raf);
       if (!reduce && visible) raf = requestAnimationFrame(draw);
