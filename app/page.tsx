@@ -150,7 +150,6 @@ export default function Home() {
         <Head id="os-title" label={openSource.label} title={openSource.title} />
         <p className="lead">{openSource.text}</p>
         <div className="ctas">
-          <a href={site.github} className="btn" target="_blank" rel="noopener noreferrer">{openSource.cta}</a>
           <span className="badge mono">{openSource.stars}</span>
         </div>
       </section>

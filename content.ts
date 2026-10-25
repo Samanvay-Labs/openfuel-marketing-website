@@ -6,7 +6,6 @@ export const site = {
   title: "OpenFuel: Your merged PRs fuel your AI",
   description:
     "OpenFuel turns every merged open-source contribution into AI credits. Ship upstream, earn credits, build faster. A Samanvay Labs project.",
-  github: "https://github.com/samanvaylabs/openfuel", // TODO: confirm repo URL
 };
 
 export const nav = {
@@ -15,7 +14,6 @@ export const nav = {
     { label: "How it works", href: "/#how-it-works" },
     { label: "Credits", href: "/#credits" },
     { label: "FAQ", href: "/#faq" },
-    { label: "GitHub", href: site.github },
   ],
   cta: "Apply Soon",
   themeToggle: "Toggle light and dark mode",
@@ -170,7 +168,6 @@ export const openSource = {
   label: "Open source",
   title: "OpenFuel is open source too.",
   text: "The tool you spend credits in is built in the open. Read the code, file issues, and send pull requests. They count.",
-  cta: "View on GitHub",
   stars: "★ Coming soon",
 };
 
@@ -198,7 +195,6 @@ export const footer = {
   wordmark: "openfuel",
   tagline: "OpenFuel is a Samanvay Labs project.",
   links: [
-    { label: "GitHub", href: site.github },
     { label: "Privacy", href: "/privacy" }, // TODO: create page
     { label: "Terms", href: "/terms" }, // TODO: create page
   ],
