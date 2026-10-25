@@ -30,7 +30,7 @@ export default function DotField() {
 
     // ---- graph generation ----
     const rows: Row[] = [{ lane: 0, edges: [], msg: "init" }];
-    let alive = new Set<number>([0]);
+    const alive = new Set<number>([0]);
     const commits: Record<number, number> = {};
     let pr = 470, balance = 1240, msgI = 0;
     const credited = new Set<number>();

@@ -1,6 +1,6 @@
 import DotField from "@/components/DotField";
 import {
-  site, hero, mission, howItWorks, verification, credits, maintainers, openSource, faq, finalCta,
+  hero, mission, howItWorks, verification, credits, maintainers, openSource, faq, finalCta,
 } from "@/content/openfuel";
 
 function Head({ id, label, title }: { id: string; label: string; title: string }) {
