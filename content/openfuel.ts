@@ -12,9 +12,9 @@ export const site = {
 export const nav = {
   wordmark: "openfuel",
   links: [
-    { label: "How it works", href: "/#how-it-works" },
-    { label: "Credits", href: "/#credits" },
-    { label: "FAQ", href: "/#faq" },
+    { label: "How it works", href: "/openfuel#how-it-works" },
+    { label: "Credits", href: "/openfuel#credits" },
+    { label: "FAQ", href: "/openfuel#faq" },
   ],
   cta: "Apply Soon",
   themeToggle: "Toggle light and dark mode",

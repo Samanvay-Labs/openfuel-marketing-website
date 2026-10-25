@@ -1,8 +1,11 @@
-# openfuel-marketing-website
+# Samanvay Labs website + OpenFuel
 
-Marketing site for **OpenFuel**, a Samanvay Labs project. Developers earn AI credits for pull requests merged into open-source projects.
+One Next.js 16 (App Router) app serving two sites with separate layouts and styles:
 
-Built with Next.js 14 (App Router) and TypeScript. No analytics or trackers. Fonts (Inter, JetBrains Mono) are self-hosted at build time via `next/font`.
+| Route | Site |
+| --- | --- |
+| `/` (and `/home` → `/`) | Samanvay Labs main site (services, industries, methodology, about, contact, privacy, terms) |
+| `/openfuel` | OpenFuel marketing page, a Samanvay Labs project |
 
 ## Setup
 
@@ -13,12 +16,23 @@ npm run build   # production build
 npm start       # serve the build
 ```
 
+Don't run `npm run build` while `npm run dev` is running. Both write to `.next`.
+
 ## Structure
 
-- `content.ts`: all site copy. Edit text here. Items marked `TODO` / `TBD` are placeholders.
-- `app/page.tsx`: landing page sections.
-- `app/docs/page.tsx`: docs placeholder.
-- `app/layout.tsx`: navbar, footer, metadata, fonts.
-- `app/globals.css`: all styles (black and white, two grays, dark default).
-- `app/icon.svg`: favicon.
-- `components/`: theme toggle and scroll fade-in.
+- `app/(samanvay)/`: Samanvay Labs root layout, Tailwind + shadcn styles (`globals.css`), pages under `(marketing)/`.
+- `app/(openfuel)/openfuel/`: OpenFuel root layout, plain CSS (`openfuel.css`), landing page.
+- `content/site.ts`, `content/*.ts`: Samanvay Labs copy.
+- `content/openfuel.ts`: OpenFuel copy.
+- `components/ui`, `components/layout`, `components/sections`, `components/motion`: Samanvay Labs components.
+- `components/DotField.tsx`, `ThemeToggle.tsx`, `Reveal.tsx`: OpenFuel components (hero git-graph animation, theme toggle, scroll fade-in).
+- `lib/`: SEO helpers and contact form handling.
+
+## Environment
+
+Copy `.env.example` to `.env.local`:
+
+- `NEXT_PUBLIC_SITE_URL`: canonical site URL
+- `RESEND_API_KEY` + `CONTACT_TO_EMAIL`: optional contact form email delivery
+
+Without Resend credentials, the contact form still validates and confirms submission (logs in development).

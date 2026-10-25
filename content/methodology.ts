@@ -1,0 +1,200 @@
+export const methodologyContent = {
+  seo: {
+    title: "Methodology | Samanvay Labs",
+    description:
+      "Our engineering framework: Discover, Analyze, Design, Engineer, Integrate, and Improve—ensuring consistency, transparency, and measurable business outcomes.",
+  },
+  quote:
+    "Technology succeeds when it fits the business—not when the business adapts to the technology.",
+  philosophy: {
+    title: "Our Philosophy",
+    paragraphs: [
+      "Every organization already has processes.",
+      "Every organization already has people.",
+      "Every organization already has systems.",
+      "Our responsibility is not to replace them.",
+      "Our responsibility is to improve how they work together.",
+      "Technology is successful only when it becomes an invisible part of everyday operations.",
+    ],
+  },
+  framework: {
+    title: "Our Engineering Framework",
+    paragraphs: [
+      "Every engagement follows the same structured methodology.",
+      "This framework ensures consistency, transparency, and measurable business outcomes.",
+    ],
+  },
+  phases: [
+    {
+      number: "01",
+      title: "Discover",
+      subtitle: "Understand before building.",
+      body: "We begin by learning how the organization currently operates.",
+      includesLabel: "This includes:",
+      includes: [
+        "Business objectives",
+        "Existing workflows",
+        "Operational bottlenecks",
+        "Decision-making processes",
+        "Technology landscape",
+        "Stakeholder expectations",
+      ],
+      note: "We ask questions before proposing solutions.",
+      deliverablesTitle: "Deliverables",
+      deliverables: [
+        "Current-state assessment",
+        "Opportunity map",
+        "Problem definition",
+        "Success metrics",
+      ],
+    },
+    {
+      number: "02",      title: "Analyze",
+      subtitle: "Engineering begins with understanding systems.",
+      body: "Rather than immediately writing software, we identify:",
+      includesLabel: null,
+      includes: [
+        "Process inefficiencies",
+        "Manual work",
+        "Information gaps",
+        "Automation opportunities",
+        "Integration opportunities",
+        "Risk factors",
+      ],
+      note: "This phase determines whether technology is even the right answer. Sometimes the best solution is process improvement rather than additional software.",
+      deliverablesTitle: "Deliverables",
+      deliverables: [
+        "Operational analysis",
+        "Technical feasibility",
+        "Risk assessment",
+        "Solution recommendation",
+      ],
+    },
+    {
+      number: "03",
+      title: "Design",
+      subtitle: "Design before development.",
+      body: "We create solutions that fit naturally into the organization's existing ecosystem.",
+      includesLabel: "Areas include:",
+      includes: [
+        "System architecture",
+        "User experience",
+        "Data flow",
+        "Security",
+        "Scalability",
+        "Governance",
+      ],
+      note: "Good architecture prevents expensive redesign later.",
+      deliverablesTitle: "Deliverables",
+      deliverables: [
+        "Architecture diagrams",
+        "User journeys",
+        "Technical specifications",
+        "Project roadmap",
+      ],
+    },
+    {
+      number: "04",
+      title: "Engineer",
+      subtitle: "Build with discipline.",
+      body: "Engineering focuses on:",
+      includesLabel: null,
+      includes: [
+        "Clean architecture",
+        "Secure implementation",
+        "Modular systems",
+        "Maintainable code",
+        "Automated testing",
+        "Performance optimization",
+      ],
+      note: "Every solution should be understandable by future engineers.",
+      deliverablesTitle: null,
+      deliverables: [],
+    },
+    {
+      number: "05",
+      title: "Integrate",
+      subtitle: "Technology should connect systems—not create silos.",
+      body: "We ensure new platforms integrate effectively with existing business operations.",
+      includesLabel: "Integration may include:",
+      includes: [
+        "APIs",
+        "Internal platforms",
+        "Cloud services",
+        "Data pipelines",
+        "Authentication systems",
+        "Reporting tools",
+      ],
+      note: null,
+      deliverablesTitle: null,
+      deliverables: [],
+    },
+    {
+      number: "06",
+      title: "Improve",
+      subtitle: "Deployment is the beginning—not the end.",
+      body: "We evaluate:",
+      includesLabel: null,
+      includes: [
+        "Adoption",
+        "Performance",
+        "User feedback",
+        "Business outcomes",
+        "Future improvements",
+      ],
+      note: "Engineering is continuous improvement.",
+      deliverablesTitle: null,
+      deliverables: [],
+    },
+  ],
+  principles: {
+    title: "Engineering Principles",
+    items: [
+      {
+        title: "Simplicity",
+        description: "Simple systems are easier to maintain.",
+      },
+      {
+        title: "Reliability",
+        description: "Software should inspire confidence.",
+      },
+      {
+        title: "Security",
+        description: "Trust begins with secure engineering.",
+      },
+      {
+        title: "Scalability",
+        description: "Today's solution should support tomorrow's growth.",
+      },
+      {
+        title: "Observability",
+        description:
+          "Systems should explain themselves through meaningful metrics.",
+      },
+      {
+        title: "Maintainability",
+        description:
+          "Future engineers should enjoy working with the software we build.",
+      },
+    ],
+  },
+  successMetrics: {
+    title: "Success Metrics",
+    introduction: "We measure success using business outcomes.",
+    body: "Examples include:",
+    metrics: [
+      "Time saved",
+      "Manual work eliminated",
+      "Faster approvals",
+      "Higher accuracy",
+      "Improved visibility",
+      "Better customer experience",
+      "Reduced operational cost",
+      "Increased productivity",
+    ],
+    closing:
+      "Technology is only valuable when these metrics improve.",
+  },
+  closing:
+    "Our methodology is intentionally disciplined. It allows us to build systems that continue creating value long after implementation is complete.",
+} as const;

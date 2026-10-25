@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import Link from "next/link";
-import "./globals.css";
-import { site, nav, footer } from "@/content";
+import "./openfuel.css";
+import { site, nav, footer } from "@/content/openfuel";
 import ThemeToggle from "@/components/ThemeToggle";
 import Reveal from "@/components/Reveal";
 
@@ -46,7 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="skip">Skip to content</a>
         <header className="nav">
           <div className="wrap nav-inner">
-            <Link href="/" className="wordmark" aria-label="OpenFuel home">{nav.wordmark}</Link>
+            <Link href="/openfuel" className="wordmark" aria-label="OpenFuel home">{nav.wordmark}</Link>
             <nav aria-label="Primary">
               <ul className="nav-links">
                 {nav.links.map((l) => (
