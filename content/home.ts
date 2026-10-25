@@ -10,7 +10,7 @@ export const homeContent = {
     supporting:
       "We help organizations simplify operations, automate repetitive work, and build scalable digital systems through software engineering, artificial intelligence, and intelligent automation.",
     primaryCta: { label: "Explore OpenFuel", href: "/openfuel" },
-    secondaryCta: { label: "Get in touch", href: "mailto:hello@samanvaylabs.com" },
+    secondaryCta: { label: "Contact us", href: "/#contact" },
   },
   trust: {
     lines: [
@@ -130,7 +130,7 @@ export const homeContent = {
     ctaTitle: "Let's Build Smarter Systems Together.",
     ctaBody:
       "Whether you're modernizing legacy software, exploring AI, or scaling digital operations, we'd love to understand your challenges and discuss what's possible.",
-    primaryCta: { label: "Start a Conversation", href: "mailto:hello@samanvaylabs.com" },
+    primaryCta: { label: "Start a Conversation", href: "/#contact" },
 
   },
   footerTagline: "Engineering clarity through intelligent systems.",

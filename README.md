@@ -4,7 +4,7 @@ One Next.js 16 (App Router) app serving two sites with separate layouts and styl
 
 | Route | Site |
 | --- | --- |
-| `/` (and `/home` → `/`) | Samanvay Labs main site (services, industries, methodology, about, contact, privacy, terms) |
+| `/` (and `/home` → `/`) | Samanvay Labs home: hero + contact form (`/#contact`). Also `/privacy`, `/terms` |
 | `/openfuel` | OpenFuel marketing page, a Samanvay Labs project |
 
 ## Setup
@@ -26,6 +26,7 @@ Don't run `npm run build` while `npm run dev` is running. Both write to `.next`.
 - `content/openfuel.ts`: OpenFuel copy.
 - `components/ui`, `components/layout`, `components/sections`, `components/motion`: Samanvay Labs components.
 - `components/DotField.tsx`, `ThemeToggle.tsx`, `Reveal.tsx`: OpenFuel components (hero git-graph animation, theme toggle, scroll fade-in).
+- `components/sections/contact-form.tsx` + `lib/contact.ts` + `content/contact.ts`: contact form (name, email, organization, reason, message), validated server-side and emailed via the Resend HTTP API.
 - `lib/`: SEO helpers and contact form handling.
 
 ## Environment

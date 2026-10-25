@@ -44,7 +44,7 @@ export function Logo({
         alt="Samanvay Labs"
         width={280}
         height={74}
-        className="h-11 w-auto object-contain sm:h-12 md:h-14"
+        className="h-9 w-auto object-contain md:h-10"
         priority={priority}
       />
     </Link>

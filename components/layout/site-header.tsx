@@ -23,11 +23,11 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/80 bg-background/90 backdrop-blur-md">
-      <div className="mx-auto flex h-[4.5rem] max-w-[1280px] items-center justify-between px-6 md:h-20 md:px-8">
+      <div className="mx-auto flex h-16 max-w-[1280px] items-center gap-6 px-6 md:px-8">
         <Logo priority />
 
         <nav
-          className="hidden items-center gap-1 lg:flex"
+          className="ml-auto hidden items-center gap-6 md:flex"
           aria-label="Primary"
         >
           {navigation.map((item) => {
@@ -41,7 +41,7 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "rounded-md px-3 py-2 text-sm font-medium transition-colors focus-ring",
+                  "rounded-md py-2 text-sm font-medium transition-colors focus-ring",
                   active
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground"
@@ -53,19 +53,19 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center md:flex">
           <Button
-            render={<a href="mailto:hello@samanvaylabs.com" />}
-            className="h-10 rounded-lg px-4 text-sm"
+            render={<Link href="/#contact" />}
+            className="h-9 rounded-lg px-4 text-sm"
           >
-            Get in touch
+            Contact us
           </Button>
         </div>
 
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger
             className={cn(
-              "inline-flex size-9 items-center justify-center rounded-lg border border-border bg-background lg:hidden",
+              "ml-auto inline-flex size-9 items-center justify-center rounded-lg border border-border bg-background md:hidden",
               "hover:bg-muted focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
             )}
             aria-label="Open menu"
@@ -103,11 +103,11 @@ export function SiteHeader() {
               })}
               <Button
                 render={
-                  <a href="mailto:hello@samanvaylabs.com" onClick={() => setOpen(false)} />
+                  <Link href="/#contact" onClick={() => setOpen(false)} />
                 }
                 className="mt-6 h-11 w-full rounded-lg"
               >
-                Get in touch
+                Contact us
               </Button>
             </nav>
           </SheetContent>

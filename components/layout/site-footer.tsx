@@ -42,16 +42,6 @@ export function SiteFooter() {
                   {siteConfig.email}
                 </a>
               </li>
-              <li>
-                <a
-                  href={siteConfig.linkedIn}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-ring rounded-sm"
-                >
-                  LinkedIn
-                </a>
-              </li>
               {footerLinks.legal.map((item) => (
                 <li key={item.href}>
                   <Link

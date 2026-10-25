@@ -1,4 +1,4 @@
-import { ClosingCTA } from "@/components/sections/closing-cta";
+import { ContactSection } from "@/components/sections/contact-form";
 import { Hero } from "@/components/sections/hero";
 import { homeContent } from "@/content/home";
 import { createMetadata } from "@/lib/seo";
@@ -9,9 +9,9 @@ export const metadata = createMetadata({
   path: "/",
 });
 
-// Minimal home: hero + one closing call to action.
+// Minimal home: hero + contact form.
 export default function HomePage() {
-  const { hero, closing } = homeContent;
+  const { hero } = homeContent;
 
   return (
     <>
@@ -21,12 +21,7 @@ export default function HomePage() {
         primaryCta={hero.primaryCta}
         secondaryCta={hero.secondaryCta}
       />
-      <ClosingCTA
-        statement={closing.statement}
-        title={closing.ctaTitle}
-        body={closing.ctaBody}
-        primaryCta={closing.primaryCta}
-      />
+      <ContactSection />
     </>
   );
 }

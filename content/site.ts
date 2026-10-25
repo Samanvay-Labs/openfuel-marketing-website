@@ -6,7 +6,6 @@ export const siteConfig = {
     "Samanvay Labs engineers intelligent software, enterprise platforms, and AI-powered automation that help organizations improve productivity, simplify operations, and scale with confidence.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://samanvaylabs.com",
   email: "hello@samanvaylabs.com",
-  linkedIn: "https://www.linkedin.com/company/samanvay-labs",
   copyrightYear: new Date().getFullYear(),
 } as const;
 

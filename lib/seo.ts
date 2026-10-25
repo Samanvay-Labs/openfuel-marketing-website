@@ -52,7 +52,6 @@ export function organizationJsonLd() {
     url: siteConfig.url,
     email: siteConfig.email,
     description: siteConfig.description,
-    sameAs: [siteConfig.linkedIn],
     logo: `${siteConfig.url}/brand/logo-mark-blue.png`,
   };
 }
