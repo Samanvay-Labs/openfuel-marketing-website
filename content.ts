@@ -15,7 +15,6 @@ export const nav = {
     { label: "How it works", href: "/#how-it-works" },
     { label: "Credits", href: "/#credits" },
     { label: "FAQ", href: "/#faq" },
-    { label: "Docs", href: "/docs" },
     { label: "GitHub", href: site.github },
   ],
   cta: "Apply Soon",
@@ -200,15 +199,8 @@ export const footer = {
   tagline: "OpenFuel is a Samanvay Labs project.",
   links: [
     { label: "GitHub", href: site.github },
-    { label: "Docs", href: "/docs" },
     { label: "Privacy", href: "/privacy" }, // TODO: create page
     { label: "Terms", href: "/terms" }, // TODO: create page
   ],
   copyright: "© 2026 Samanvay Labs",
-};
-
-export const docs = {
-  title: "Docs",
-  text: "Documentation is coming soon. In the meantime, follow progress on GitHub.",
-  back: "Back to home",
 };
