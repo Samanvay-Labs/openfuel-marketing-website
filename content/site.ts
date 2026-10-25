@@ -12,12 +12,7 @@ export const siteConfig = {
 
 export const navigation = [
   { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/industries", label: "Industries" },
-  { href: "/methodology", label: "Methodology" },
   { href: "/openfuel", label: "OpenFuel" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
 ] as const;
 
 export const footerLinks = {

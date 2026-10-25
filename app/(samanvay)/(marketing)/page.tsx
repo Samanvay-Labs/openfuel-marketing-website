@@ -26,7 +26,6 @@ export default function HomePage() {
         title={closing.ctaTitle}
         body={closing.ctaBody}
         primaryCta={closing.primaryCta}
-        secondaryCta={closing.secondaryCta}
       />
     </>
   );

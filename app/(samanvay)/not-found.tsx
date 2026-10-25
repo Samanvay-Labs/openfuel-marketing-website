@@ -30,7 +30,7 @@ export default function NotFound() {
             </Button>
             <Button
               variant="outline"
-              render={<Link href="/contact" />}
+              render={<a href="mailto:hello@samanvaylabs.com" />}
               className="h-11 rounded-lg px-5"
             >
               Contact Us

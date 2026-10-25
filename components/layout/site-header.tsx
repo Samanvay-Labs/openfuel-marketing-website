@@ -55,10 +55,10 @@ export function SiteHeader() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <Button
-            render={<Link href="/contact" />}
+            render={<a href="mailto:hello@samanvaylabs.com" />}
             className="h-10 rounded-lg px-4 text-sm"
           >
-            Schedule a Discovery Call
+            Get in touch
           </Button>
         </div>
 
@@ -103,11 +103,11 @@ export function SiteHeader() {
               })}
               <Button
                 render={
-                  <Link href="/contact" onClick={() => setOpen(false)} />
+                  <a href="mailto:hello@samanvaylabs.com" onClick={() => setOpen(false)} />
                 }
                 className="mt-6 h-11 w-full rounded-lg"
               >
-                Schedule a Discovery Call
+                Get in touch
               </Button>
             </nav>
           </SheetContent>
