@@ -26,7 +26,7 @@ Don't run `npm run build` while `npm run dev` is running. Both write to `.next`.
 - `content/openfuel.ts`: OpenFuel copy.
 - `components/ui`, `components/layout`, `components/sections`, `components/motion`: Samanvay Labs components.
 - `components/DotField.tsx`, `ThemeToggle.tsx`, `Reveal.tsx`: OpenFuel components (hero git-graph animation, theme toggle, scroll fade-in).
-- `components/sections/contact-form.tsx` + `lib/contact.ts` + `content/contact.ts`: contact form (name, email, organization, reason, message), validated server-side and emailed via the Resend HTTP API.
+- `components/sections/contact-form.tsx` + `lib/contact.ts` + `content/contact.ts`: contact form (name, email, organization, reason, message), validated server-side. Submission is mocked for now (no email is sent).
 - `lib/`: SEO helpers and contact form handling.
 
 ## Environment
@@ -34,6 +34,4 @@ Don't run `npm run build` while `npm run dev` is running. Both write to `.next`.
 Copy `.env.example` to `.env.local`:
 
 - `NEXT_PUBLIC_SITE_URL`: canonical site URL
-- `RESEND_API_KEY` + `CONTACT_TO_EMAIL`: optional contact form email delivery
 
-Without Resend credentials, the contact form still validates and confirms submission (logs in development).

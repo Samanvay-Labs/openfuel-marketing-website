@@ -48,44 +48,10 @@ export async function submitContactForm(
     };
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL;
-
-  if (apiKey && to) {
-    try {
-      const res = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: process.env.CONTACT_FROM_EMAIL ?? "Samanvay Labs <onboarding@resend.dev>",
-          to: [to],
-          reply_to: values.email,
-          subject: `[${values.reason}] ${values.name}`,
-          text: [
-            `Name: ${values.name}`,
-            `Email: ${values.email}`,
-            `Organization: ${values.organization || "-"}`,
-            `Reason: ${values.reason}`,
-            "",
-            values.message,
-          ].join("\n"),
-        }),
-      });
-      if (!res.ok) throw new Error(`Resend ${res.status}`);
-    } catch (err) {
-      console.error("Contact form delivery failed", err);
-      return {
-        status: "error",
-        message: "Something went wrong sending your message. Please email us directly.",
-        values,
-      };
-    }
-  } else if (process.env.NODE_ENV === "development") {
-    console.info("[contact] (no RESEND_API_KEY, not sent)", values);
-  }
+  // MOCK: no email is sent yet. Simulate a short network delay and succeed.
+  // To go live, send `values` to an email service (e.g. Resend) here.
+  await new Promise((r) => setTimeout(r, 800));
+  console.info("[contact:mock]", values.reason, values.email);
 
   return { status: "success" };
 }
