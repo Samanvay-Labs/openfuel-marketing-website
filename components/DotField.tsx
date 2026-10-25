@@ -1,9 +1,22 @@
 "use client";
 import { useEffect, useRef } from "react";
 
-// GitHub-style contribution graph: 7 rows (days) x N columns (weeks).
-// A cursor sweeps across the weeks "committing" to cells, which pop in and
-// slowly cool down, so the graph keeps filling and evolving.
+// Animated git log: a live commit graph scrolls by, feature branches fork off
+// main and merge back. Every merge pays out credits into a running balance.
+type Row = {
+  lane: number;               // lane of this row's commit node
+  edges: [number, number][];  // connections from previous row: [fromLane, toLane]
+  msg: string;
+  merge?: { pr: number; credits: number };
+};
+
+const MSGS = [
+  "fix: handle empty config", "feat: add retry backoff", "docs: update README",
+  "test: cover edge cases", "refactor: split parser", "perf: cache lookups",
+  "fix: race in worker pool", "feat: streaming output", "chore: bump deps",
+  "fix: off-by-one in pager", "feat: dark mode tokens", "test: snapshot CLI",
+];
+
 export default function DotField() {
   const ref = useRef<HTMLCanvasElement>(null);
 
@@ -11,24 +24,44 @@ export default function DotField() {
     const canvas = ref.current!;
     const ctx = canvas.getContext("2d")!;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const ROWS = 7;
-    const LEVELS = [0.08, 0.3, 0.52, 0.76, 1]; // opacity per contribution level
+    const ROW = 52, LANE = 30, SPEED = 0.9; // rows per second
     let w = 0, h = 0, raf = 0, visible = true;
-    let cols = 0, cell = 0, gap = 0, ox = 0, oy = 0;
-    let level: number[] = [];   // 0..4 per cell
-    let bump: number[] = [];    // time of last commit (for pop effect)
-    let cursor = 0, last = 0;
 
-    function seed() {
-      level = Array.from({ length: cols * ROWS }, (_, i) => {
-        const c = Math.floor(i / ROWS), r = i % ROWS;
-        const weekend = r === 0 || r === 6 ? 0.45 : 1;
-        const trend = 0.35 + 0.65 * (c / Math.max(1, cols - 1)); // busier recently
-        const p = Math.random() * weekend * trend;
-        return p > 0.75 ? 4 : p > 0.55 ? 3 : p > 0.38 ? 2 : p > 0.22 ? 1 : 0;
-      });
-      bump = new Array(cols * ROWS).fill(-10);
+    // ---- graph generation ----
+    const rows: Row[] = [{ lane: 0, edges: [], msg: "init" }];
+    let alive = new Set<number>([0]);
+    const commits: Record<number, number> = {};
+    let pr = 470, balance = 1240, msgI = 0;
+    const credited = new Set<number>();
+    const nextMsg = () => MSGS[msgI++ % MSGS.length];
+
+    function gen() {
+      const prev = [...alive];
+      const straight = (skip?: number) =>
+        prev.filter((l) => l !== skip).map((l) => [l, l] as [number, number]);
+      const free = [1, 2].filter((l) => !alive.has(l));
+      const ready = prev.filter((l) => l > 0 && commits[l] >= 2);
+      const r = Math.random();
+      if (ready.length && r < 0.45) {
+        const k = ready[Math.floor(Math.random() * ready.length)];
+        alive.delete(k);
+        const credits = [40, 60, 80, 120, 150, 200][Math.floor(Math.random() * 6)];
+        rows.push({ lane: 0, edges: [...straight(k), [k, 0]], msg: `Merge PR #${++pr}`, merge: { pr, credits } });
+      } else if (free.length && r < 0.75) {
+        const k = free[0];
+        alive.add(k);
+        commits[k] = 1;
+        rows.push({ lane: k, edges: [...straight(), [0, k]], msg: nextMsg() });
+      } else {
+        const lanes = prev.filter((l) => l > 0);
+        const k = lanes.length ? lanes[Math.floor(Math.random() * lanes.length)] : 0;
+        if (k) commits[k]++;
+        rows.push({ lane: k, edges: straight(), msg: nextMsg() });
+      }
     }
+    for (let i = 0; i < 14; i++) gen();
+    // start "now" with history already filling the view
+    const t0 = performance.now() / 1000 - 12 / SPEED;
 
     function resize() {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -37,75 +70,98 @@ export default function DotField() {
       canvas.width = w * dpr;
       canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      // fit 7 rows to the height, as many weeks as fit the width
-      cell = Math.max(8, Math.min(26, (h * 0.8) / (ROWS * 1.25)));
-      gap = cell * 0.25;
-      const prev = cols;
-      cols = Math.max(4, Math.floor((w + gap) / (cell + gap)));
-      ox = (w - (cols * (cell + gap) - gap)) / 2;
-      oy = (h - (ROWS * (cell + gap) - gap)) / 2;
-      if (cols !== prev) seed();
-    }
-
-    function roundRect(x: number, y: number, s: number, r: number) {
-      ctx.beginPath();
-      ctx.moveTo(x + r, y);
-      ctx.arcTo(x + s, y, x + s, y + s, r);
-      ctx.arcTo(x + s, y + s, x, y + s, r);
-      ctx.arcTo(x, y + s, x, y, r);
-      ctx.arcTo(x, y, x + s, y, r);
-      ctx.fill();
-    }
-
-    function step(t: number) {
-      // advance sweeping cursor ~6 weeks/sec, committing to a few days in that week
-      if (t - last > 0.16) {
-        last = t;
-        cursor = (cursor + 1) % cols;
-        for (let r = 0; r < ROWS; r++) {
-          if (Math.random() < 0.45) {
-            const i = cursor * ROWS + r;
-            level[i] = Math.min(4, level[i] + 1 + Math.floor(Math.random() * 2));
-            bump[i] = t;
-          }
-        }
-      }
-      // random activity elsewhere, and gentle cooling so it never saturates
-      if (Math.random() < 0.3) {
-        const i = Math.floor(Math.random() * level.length);
-        level[i] = Math.min(4, level[i] + 1);
-        bump[i] = t;
-      }
-      if (Math.random() < 0.5) {
-        const i = Math.floor(Math.random() * level.length);
-        if (t - bump[i] > 2 && level[i] > 0) level[i]--;
-      }
     }
 
     function draw(time: number) {
-      const t = time / 1000;
-      const fg = getComputedStyle(document.documentElement).getPropertyValue("--fg").trim() || "#fff";
+      const css = getComputedStyle(document.documentElement);
+      const fg = css.getPropertyValue("--fg").trim() || "#fff";
+      const muted = css.getPropertyValue("--muted").trim() || "#999";
+      const bg = css.getPropertyValue("--bg").trim() || "#000";
+      const font = getComputedStyle(canvas).fontFamily || "monospace";
       if (!w || !h) resize();
-      if (!reduce) step(t);
+
+      const now = (reduce ? 12 / SPEED : time / 1000 - t0) * SPEED; // float row index at top
+      while (rows.length < now + 3) gen();
+      const head = Math.floor(now);
+      const top = 70;
+      const y = (r: number) => top + (now - r) * ROW;   // newest at top, history scrolls down
+      const x = (l: number) => 24 + l * LANE;
+      const fade = (yy: number) => Math.max(0, Math.min(1, (yy - top + ROW) / ROW, (h - yy) / 90));
+
+      // credit any merge that has appeared
+      for (let r = 0; r <= head; r++) {
+        const m = rows[r].merge;
+        if (m && !credited.has(r)) { credited.add(r); if (!reduce || r < head) balance += m.credits; }
+      }
+
       ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = fg;
-      for (let c = 0; c < cols; c++) {
-        const near = !reduce && c === cursor;
-        for (let r = 0; r < ROWS; r++) {
-          const i = c * ROWS + r;
-          const age = t - bump[i];
-          const pop = !reduce && age < 0.5 ? Math.sin((age / 0.5) * Math.PI) : 0;
-          let a = LEVELS[level[i]] + pop * 0.25 + (near ? 0.12 : 0);
-          // fade toward left/right edges
-          const x = ox + c * (cell + gap);
-          a *= Math.min(1, (Math.min(x, w - x - cell) + 20) / 80);
-          const s = cell * (1 + pop * 0.18);
-          const off = (s - cell) / 2;
-          ctx.globalAlpha = Math.max(0, Math.min(1, a));
-          roundRect(x - off, oy + r * (cell + gap) - off, s, cell * 0.22);
+      ctx.lineWidth = 2;
+      ctx.lineCap = "round";
+      const first = Math.max(1, Math.floor(now - (h - top) / ROW) - 1);
+
+      // edges
+      for (let r = first; r <= head + 1 && r < rows.length; r++) {
+        const appear = r > now ? 0 : Math.min(1, now - r + 0.0001) ; // newest row grows in
+        if (r > now) continue;
+        for (const [a, b] of rows[r].edges) {
+          const y1 = y(r - 1), y2 = y(r - 1) - (y(r - 1) - y(r)) * appear;
+          ctx.globalAlpha = fade((y1 + y2) / 2) * 0.55;
+          ctx.strokeStyle = fg;
+          ctx.beginPath();
+          ctx.moveTo(x(a), y1);
+          if (a === b) ctx.lineTo(x(b), y2);
+          else ctx.bezierCurveTo(x(a), y1 - ROW * 0.6, x(b), y(r) + ROW * 0.4, x(b), y(r));
+          ctx.stroke();
         }
       }
+
+      // nodes + labels
+      for (let r = first; r <= head; r++) {
+        const row = rows[r];
+        const yy = y(r), a = fade(yy);
+        if (a <= 0) continue;
+        const age = now - r;
+        const pop = !reduce && age < 0.6 ? Math.sin((age / 0.6) * Math.PI) : 0;
+        ctx.globalAlpha = a;
+        const rad = (row.merge ? 7 : 5) + pop * 3;
+        ctx.fillStyle = row.merge ? fg : bg;
+        ctx.strokeStyle = fg;
+        ctx.beginPath();
+        ctx.arc(x(row.lane), yy, rad, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        const tx = x(3) + 8;
+        ctx.textBaseline = "middle";
+        ctx.font = `14px ${font}`;
+        ctx.fillStyle = row.merge ? fg : muted;
+        ctx.fillText(row.msg, tx, yy);
+        if (row.merge) {
+          const label = `+${row.merge.credits} credits`;
+          const mx = tx + ctx.measureText(row.msg).width + 14;
+          ctx.font = `600 13px ${font}`;
+          const tw = ctx.measureText(label).width;
+          ctx.globalAlpha = a * (0.85 + pop * 0.15);
+          ctx.fillStyle = fg;
+          ctx.beginPath();
+          ctx.roundRect(mx, yy - 12, tw + 18, 24, 12);
+          ctx.fill();
+          ctx.fillStyle = bg;
+          ctx.fillText(label, mx + 9, yy + 1);
+        }
+      }
+
+      // balance header
       ctx.globalAlpha = 1;
+      ctx.font = `13px ${font}`;
+      ctx.fillStyle = muted;
+      ctx.textBaseline = "alphabetic";
+      ctx.fillText("$ git log --graph", 24, 26);
+      ctx.font = `600 20px ${font}`;
+      ctx.fillStyle = fg;
+      const bal = `${balance.toLocaleString("en-US")} credits`;
+      ctx.fillText(bal, Math.max(24, w - ctx.measureText(bal).width - 8), 28);
+
       cancelAnimationFrame(raf);
       if (!reduce && visible) raf = requestAnimationFrame(draw);
     }
@@ -120,7 +176,7 @@ export default function DotField() {
       if (visible || reduce) raf = requestAnimationFrame(draw);
     });
     io.observe(canvas);
-    const mo = new MutationObserver(() => reduce && draw(0)); // redraw on theme toggle
+    const mo = new MutationObserver(() => draw(performance.now())); // redraw on theme toggle
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 
     return () => { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); mo.disconnect(); };

@@ -64,7 +64,7 @@ h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
 .hero { padding-top: 120px; padding-bottom: 120px; }
 .hero:has(.dotfield) { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 48px; align-items: stretch; }
 .dotfield { position: relative; min-height: 420px; }
-.dotfield canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.dotfield canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; font-family: var(--mono); }
 @media (max-width: 900px) {
   .hero:has(.dotfield) { grid-template-columns: 1fr; }
   .dotfield { min-height: 240px; order: -1; }
