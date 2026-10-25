@@ -54,7 +54,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center md:flex">
-          <Button
+          <Button nativeButton={false}
             render={<Link href="/#contact" />}
             className="h-9 rounded-lg px-4 text-sm"
           >
@@ -101,7 +101,7 @@ export function SiteHeader() {
                   </Link>
                 );
               })}
-              <Button
+              <Button nativeButton={false}
                 render={
                   <Link href="/#contact" onClick={() => setOpen(false)} />
                 }

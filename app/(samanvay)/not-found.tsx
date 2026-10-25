@@ -22,13 +22,13 @@ export default function NotFound() {
             Return home or contact us if you need assistance.
           </p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <Button
+            <Button nativeButton={false}
               render={<Link href="/" />}
               className="h-11 rounded-lg px-5"
             >
               Return Home
             </Button>
-            <Button
+            <Button nativeButton={false}
               variant="outline"
               render={<Link href="/#contact" />}
               className="h-11 rounded-lg px-5"

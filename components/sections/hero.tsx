@@ -47,14 +47,14 @@ export function Hero({
             {supporting}
           </p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button
+            <Button nativeButton={false}
               render={<Link href={primaryCta.href} />}
               className="h-11 rounded-lg px-5 text-sm"
             >
               {primaryCta.label}
             </Button>
             {secondaryCta ? (
-              <Button
+              <Button nativeButton={false}
                 variant="outline"
                 render={<Link href={secondaryCta.href} />}
                 className="h-11 rounded-lg px-5 text-sm"
